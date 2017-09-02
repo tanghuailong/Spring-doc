@@ -1,4 +1,5 @@
-### 11.开发你的第一个Spring boot应用
+#
+## 11.开发你的第一个Spring boot应用
 ---
 让我们开发一个简单的 "Hello World" Java web 应用，来展示Spring Boot 某些重要特性，我们将使用Mavan来构建这个项目，因为大多数IDEs 都支持它。
 
@@ -34,20 +35,20 @@ Java version: 1.7.0_51, vendor: Oracle Corporation
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>myproject</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+<groupId>com.example</groupId>
+<artifactId>myproject</artifactId>
+<version>0.0.1-SNAPSHOT</version>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.6.RELEASE</version>
-    </parent>
+<parent>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-parent</artifactId>
+<version>1.5.6.RELEASE</version>
+</parent>
 
-    <!-- Additional lines to be added here... -->
+<!-- Additional lines to be added here... -->
 
 </project>
 
@@ -77,10 +78,10 @@ $ mvn dependency:tree
 
 ```
 <dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-web</artifactId>
+</dependency>
 </dependencies>
 
 ```
@@ -103,14 +104,14 @@ import org.springframework.web.bind.annotation.*;
 @EnableAutoConfiguration
 public class Example {
 
-    @RequestMapping("/")
-    String home() {
-        return "Hello World!";
-    }
+@RequestMapping("/")
+String home() {
+return "Hello World!";
+}
 
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(Example.class, args);
-    }
+public static void main(String[] args) throws Exception {
+SpringApplication.run(Example.class, args);
+}
 
 }
 
@@ -118,15 +119,19 @@ public class Example {
 
 虽然这里并没有太多代码，其实底下发生了很多事情，让我们逐步走进这一个重要的部分。
 
+
 ### 11.3.1 @RestController 和 @ RequestMapping 注解
 
-首先在我们Example 类中第一个注解`@RestCOntr`是 一个 stereotype 注解，它给余毒代码的用户一个提示，这个类在spring 扮演着这特定的角色, 比如我们这个类就是一个web controller ，当请求过来的时候，spring认为它能够处理它。
+首先在我们Example 类中第一个注解`@RestController`是 一个 stereotype 注解，它给余毒代码的用户一个提示，这个类在spring 扮演着这特定的角色, 比如我们这个类就是一个web controller ，当请求过来的时候，spring认为它能够处理它。
 
 `@RequestMapping` 注解提供了一个路由信息，它告诉任何以"/"开头的Http请求都会被对应到`home`这个方法上，`@RestController` 这个注解则告诉Spring给调用者渲染请求返回的字符串。
 
 > `@RestController`和 `@RequestMapping` 这两个注解是Spring MVC 的注解（并不是Spring boot特有的注解），更多细节浏览Spring的参考文档
 
 
+### 11.3.2 `@EnableAutoConfiguration` 注解
+
+第二个类级别的就是@EnableAutoConfiguration. 这个注解告诉Spring Boot基于你添加的Jar包依赖去猜用户希望如何配置Spring. 因为 `spring-boot-starter-web` 添加了Tomcat和Spring MVC
 
 
 

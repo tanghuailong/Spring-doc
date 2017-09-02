@@ -8,10 +8,27 @@
 
 在开始之前，打开一个命令行去检查Java的版本和Maven安装情况。
 
-    $ java -version
-    java version "1.7.0_51"
-    Java(TM) SE Runtime Environment (build 1.7.0_51-b13)
-    Java HotSpot(TM) 64-Bit Server VM (build 24.51-b03, mixed mode)
+
+```shell
+$ java -version
+java version "1.7.0_51"
+Java(TM) SE Runtime Environment (build 1.7.0_51-b13)
+Java HotSpot(TM) 64-Bit Server VM (build 24.51-b03, mixed mode
+
+```
 
 
-测试
+```
+$ mvn -v
+Apache Maven 3.2.3 (33f8c3e1027c3ddde99d3cdebad2656a31e8fdf4; 2014-08-11T13:58:10-07:00)
+Maven home: /Users/user/tools/apache-maven-3.1.1
+Java version: 1.7.0_51, vendor: Oracle Corporation
+
+```
+
+
+
+
+
+
+

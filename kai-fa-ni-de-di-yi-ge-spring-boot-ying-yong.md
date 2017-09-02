@@ -116,6 +116,15 @@ public class Example {
 
 ```
 
+虽然这里并没有太多代码，其实底下发生了很多事情，让我们逐步走进这一个重要的部分。
+
+### 11.3.1 @RestController 和 @ RequestMapping 注解
+
+首先在我们Example 类中第一个注解`@RestCOntr`是 一个 stereotype 注解，它给余毒代码的用户一个提示，这个类在spring 扮演着这特定的角色, 比如我们这个类就是一个web controller ，当请求过来的时候，spring认为它能够处理它。
+
+`@RequestMapping` 注解提供了一个路由信息，它告诉任何以"/"开头的Http请求都会被对应到`home`这个方法上，`@RestController` 这个注解则告诉Spring给调用者渲染请求返回的字符串。
+
+
 
 
 

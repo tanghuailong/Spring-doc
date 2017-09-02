@@ -131,28 +131,102 @@ SpringApplication.run(Example.class, args);
 
 ### 11.3.2 `@EnableAutoConfiguration` 注解
 
-第二个类级别的就是@EnableAutoConfiguration. 这个注解告诉Spring Boot基于你添加的Jar包依赖去猜用户希望如何配置Spring. 因为 `spring-boot-starter-web` 添加了Tomcat和Spring MVC
+第二个类级别的就是@EnableAutoConfiguration. 这个注解告诉Spring Boot基于你添加的Jar包依赖去猜用户希望如何配置Spring. 因为 `spring-boot-starter-web` 添加了Tomcat和Spring MVC，于是自动配置假定你正在开发一个web应用并相应设置了Spring.
+
+> Starters 和 Auto-Configuration
+Auto-Configuration被设计来能够和"Starters"很好的结合.但是这两个概念并不直接相关，你可以自由选择除去Starters引入的Jar依赖的其他依赖，并且Spring Boot的Auto-Configuration仍旧能够很好的工作。
+
+### 11.3.3 Main 方法
+我们这个应用的最后一个部分就是main方法，它就是一个遵循Java语法约定的标准的程序入口方法。Main 函数通过调用`run`代理了Spring Boot的`Spring Application`.`Spring Application`是我们程序的启动器，启动Spring 并开始自动配置Tomcat web Server.我们需要把`Example.class`作为一个参数传递给 `Run` 方法，去告诉 `SpringApplication` 哪一个是主要的Spring 组件。通过命令行暴露的·args·这个参数也会被传递到`SpringApplication`.
 
 
+### 11.4 运行示例
 
+这时候我们的程序应该能够开始工作。因为我们使用了`spring-boot-starter-parent` POM ,我们能够有一个有效的运行目标来启动这个应用。在项目的根目录输入 `mvn spring-boot:run` 来启动这个应用
 
+```bash
+$ mvn spring-boot:run
 
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::  (v1.5.6.RELEASE)
+....... . . .
+....... . . . (log output here)
+....... . . .
+........ Started Example in 2.222 seconds (JVM running for 6.514)
 
+```
 
+如果你打开一个网页浏览器输入`localhost:8080`，你将会看到如下输出
 
+```bash
+Hello World!
+```
+### 11.5 创建一个可执行的Jar
 
+让我们做一个完全自足的可执行的Jar文件运行在生产环境中。可执行Jars(有时候叫做 fat jars) 是一个归档的文件包含你编译的类以及你代码运行所需要的Jar依赖。
+为了创建一个可执行的Jar,我们需要在pom.xml添加一个 `spring-boot-maven-plugin`插件，在`depenencies`节点中插入如下内容
 
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build>
+```
 
+> 因为 `spring-boot-starter-parent` POM 绑定了 `repackage` 指令在 `<executions>` 配置里面，如果你没有使用parent POM的话，你需要自己去声明这些配置，详细信息请参考(plugin documention)[https://docs.spring.io/spring-boot/docs/1.5.6.RELEASE/maven-plugin/usage.html]
 
+保存你的pom.xml文件,控制台上运行`mvn package`
 
+```bash
+$ mvn package
 
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] Building myproject 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] .... ..
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ myproject ---
+[INFO] Building jar: /Users/developer/example/spring-boot-example/target/myproject-0.0.1-SNAPSHOT.jar
+[INFO]
+[INFO] --- spring-boot-maven-plugin:1.5.6.RELEASE:repackage (default) @ myproject ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+```
 
+如果你在 `target` 目录下，你应该能看到 `myproject-0.0.1-SNAPSHOT.jar` 这个文件. 这个文件大概10 MB左右，你如果想了解这个文件内部，你可以运行 `jar tvf`:
 
+```bash
+$ jar tvf target/myproject-0.0.1-SNAPSHOT.jar
+```
 
+另外在 `target`目录小你应该可以看到小很多的文件 `myproject-0.0.1-SNAPSHOT.jar.original` ,这个是maven创建的，在Spring boot repackage 之前的，原始的jar文件。
 
+可以使用 `java -jar` 来运行应用
+```bash
+$ java -jar target/myproject-0.0.1-SNAPSHOT.jar
 
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::  (v1.5.6.RELEASE)
+....... . . .
+....... . . . (log output here)
+....... . . .
+........ Started Example in 2.536 seconds (JVM running for 2.864)
+```
 
-
-
-
-
+就像之前一样可以通过 `ctrl c ` 来实现优雅的退出

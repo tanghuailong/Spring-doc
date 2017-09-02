@@ -124,6 +124,8 @@ public class Example {
 
 `@RequestMapping` 注解提供了一个路由信息，它告诉任何以"/"开头的Http请求都会被对应到`home`这个方法上，`@RestController` 这个注解则告诉Spring给调用者渲染请求返回的字符串。
 
+> `@RestController`和 `@RequestMapping` 这两个注解是Spring MVC 的注解（并不是Spring boot特有的注解），更多细节浏览Spring的参考文档
+
 
 
 
